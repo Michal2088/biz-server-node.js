@@ -2,11 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-
-const { User } = require("./models/User");
-const { Card } = require("./models/Card");
-
-
 const register=require("./routes/register")
 const login=require("./routes/login")
 const profile=require("./routes/profile")
@@ -15,6 +10,10 @@ const cards=require("./routes/cards")
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+const cors=require("cors");
+
+
+app.use(cors())
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -24,7 +24,7 @@ let genCardNumber = async () => {
     if (!card) return randomNum;
   }
 };
-
+//add new card
 router.post("/", auth, async (req, res) => {
   try {
     const { error } = cardSchema.validate(req.body);
@@ -41,8 +41,8 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-//תשובה לשאלה מספר 8
 
+//get all my card
 router.get("/my-cards", auth, async (req, res) => {
   try {
     let myCards = await Card.find({
@@ -54,7 +54,7 @@ router.get("/my-cards", auth, async (req, res) => {
   }
 });
 
-//תשובה לשאלה מספר 9
+//get all card
 router.get("/", async (req, res) => {
   try {
     let allCards = await Card.find();
@@ -64,6 +64,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get 1 card
 router.get("/:_id", auth, async (req, res) => {
   try {
     let card = await Card.findOne({
@@ -73,12 +74,12 @@ router.get("/:_id", auth, async (req, res) => {
     if (!card) return res.status(404).send("card was not found");
     res.status(200).send(card);
   } catch (error) {
-    res.status(400).send("error in get specific card");
+    res.status(400).send("error in get specific card"+error.message);
   }
 });
 
 
-
+//edit card
 router.put("/:_id", auth, async (req, res) => {
   try {
     const { error } = cardSchema.validate(req.body);
@@ -95,6 +96,7 @@ router.put("/:_id", auth, async (req, res) => {
   }
 });
 
+//delete card
 router.delete("/:_id", auth, async (req, res) => {
   try {
     let card = await Card.findOneAndRemove({

@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
     let user=await User.findOne({email:req.body.email})
     if(!user) return res.status(400).send("invalid email or password")
     const result=await bcrypt.compare(req.body.password,user.password)
-    if(!result) res.status(400).send("invalid email or password")
+    if(!result) return res.status(400).send("invalid email or password")
     const genToken=jwt.sign({_id:user._id,biz:user.biz},process.env.secretKey)
     res.status(200).send({token:genToken})
   } catch (error) {

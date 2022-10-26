@@ -8,9 +8,11 @@ const router = express.Router();
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.payload._id);
-    res.status(200).send(_.pick(user, ["_id", "name", "email", "biz"]));
+    //הוספתי את השורה הבאה אחרי הפרוייקט שעשינו ביחד באנגולר
+    if (!user) return res.status(400).send("Error in get profile")
+    res.status(200).send(_.pick(user, ["name", "biz"]));
   } catch (error) {
-    res.status(400).send("Error in get profile")
+    res.status(400).send(error)
   }
 });
 
